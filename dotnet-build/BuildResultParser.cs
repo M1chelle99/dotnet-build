@@ -1,6 +1,8 @@
 ﻿using dotnet_build.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace dotnet_build
 {
@@ -12,9 +14,52 @@ namespace dotnet_build
             var lines = resultLog.Split(Environment.NewLine).TrimAll();
             result.EngineVersion = GetEngineVersion(lines);
             result.BuildSucceeded = GetBuildStatus(lines);
-
+            result.Errors = GetBuildErrors(lines);
 
             return result;
+        }
+
+        public static IReadOnlyList<Error> GetBuildErrors(string[] lines)
+        {
+            var errors = new List<Error>();
+
+            var buildLine = lines.First(x => x.StartsWith("Build "));
+            var buildLineIndex = lines.IndexOf(buildLine);
+
+            var warningInfoLine = GetWarningInfoLine(lines);
+            var warningInfoLineIndex = lines.IndexOf(warningInfoLine);
+
+            var start = buildLineIndex + 1;
+            var end = warningInfoLineIndex;
+
+            var messages = lines[start..end];
+
+            return errors;
+        }
+
+        public static string GetErrorInfoLine(string[] lines)
+        {
+            var errorsRegex = new Regex("(\\d\\w) Error\\(s\\)");
+            if (!TryFindLine(lines, errorsRegex, out var index))
+                throw new ParserException("Cannot parse error info line.");
+
+            return lines[index];
+        }
+
+        public static string GetWarningInfoLine(string[] lines)
+        {
+            var warningsRegex = new Regex("(\\d\\w) Warning\\(s\\)");
+            if (!TryFindLine(lines, warningsRegex, out var index))
+                throw new ParserException("Cannot parse warning info line.");
+
+            return lines[index];
+        }
+
+        public static int GetErrorCount(string errorInfoLine)
+        {
+            var numberRegex = new Regex("\\d\\w");
+            var errorCountStr = numberRegex.Match(errorInfoLine).Value;
+            return int.Parse(errorCountStr);
         }
 
         public static string GetEngineVersion(string[] lines)
@@ -45,7 +90,7 @@ namespace dotnet_build
             };
         }
 
-        public static bool TryFind(this string source, string str, bool startLeft, out int start, out int end)
+        private static bool TryFind(this string source, string str, bool startLeft, out int start, out int end)
         {
             start = startLeft ? source.IndexOf(str) : source.LastIndexOf(str);
             end = start + str.Length;
@@ -56,12 +101,34 @@ namespace dotnet_build
                 return true;
         }
 
+        public static bool TryFindLine(this string[] lines, Regex regex, out int index)
+        {
+            for (int i = 0; i < lines.Length; i++)
+                if (regex.IsMatch(lines[i]))
+                {
+                    index = i;
+                    return true;
+                }
+
+            index = -1;
+            return false;
+        }
+
         private static string[] TrimAll(this string[] strings)
         {
             for (int i = 0; i < strings.Length; i++)
                 strings[i] = strings[i].Trim();
 
             return strings;
+        }
+
+        private static int IndexOf(this string[] strings, string str)
+        {
+            for (int i = 0; i < strings.Length; i++)
+                if (strings[i] == str)
+                    return i;
+
+            return -1;
         }
     }
 }
