@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-build", "dotnet-build\dotnet-build.csproj", "{0B33DF3C-2A9A-45E0-8CA8-44EC2263910C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-build", "dotnet-build\dotnet-build.csproj", "{0B33DF3C-2A9A-45E0-8CA8-44EC2263910C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-build.buildme-project", "dotnet-build.buildme-project\dotnet-build.buildme-project.csproj", "{F4A79E17-BB92-4F2F-AF8A-0DF0691A117C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-build.buildme project", "dotnet-build.buildme-project\dotnet-build.buildme project.csproj", "{F4A79E17-BB92-4F2F-AF8A-0DF0691A117C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-build.tests", "dotnet-build.tests\dotnet-build.tests.csproj", "{5A077837-5DFE-4B46-BFC5-B8846FC2B926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-build.tests", "dotnet-build.tests\dotnet-build.tests.csproj", "{5A077837-5DFE-4B46-BFC5-B8846FC2B926}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-build.starter", "dotnet-build.starter\dotnet-build.starter.csproj", "{447BB86A-4615-4856-BE6F-BF920B0C84E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-build.starter", "dotnet-build.starter\dotnet-build.starter.csproj", "{447BB86A-4615-4856-BE6F-BF920B0C84E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

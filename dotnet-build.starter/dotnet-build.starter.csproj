@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>dotnet_build.starter</RootNamespace>
+    <AssemblyName>csproj</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
